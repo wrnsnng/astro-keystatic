@@ -1,13 +1,59 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 import '../styles/global.css';
 
-const pageTitle = "My Astro Learning Blog";
+const pageTitle = "Blog";
+const posts = await getCollection('posts');
 ---
 
 <BaseLayout pageTitle={pageTitle}>
+  <div class="blog-page">
+    <div class="intro-section mb-8">
+      <p class="text-lg mb-4">
+        Browse through our blog posts to learn more about our design system.
+      </p>
+    </div>
 
-    <p>This is where I will post about my journey learning Astro.</p>
-
+    <div class="posts-grid">
+      {posts.length === 0 ? (
+        <p>No blog posts available yet.</p>
+      ) : (
+        <ul class="post-list">
+          {posts.map((post: CollectionEntry<'posts'>) => (
+            <li class="post-item mb-6 border-b pb-6">
+              <a href={`/posts/${post.slug}`} class="post-link">
+                <h2 class="text-xl font-semibold hover:text-blue-600 transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="text-gray-600 mt-2">
+                  {post.data.description || 'Click to read more'}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .post-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .post-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+</style>
