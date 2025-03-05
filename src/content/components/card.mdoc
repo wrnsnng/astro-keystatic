@@ -1,0 +1,81 @@
+---
+name: card
+title: Card
+shortDescription: Potatosalad
+status: beta
+---
+# Card Component
+
+The Card component is a flexible container for displaying related information in a visually appealing way.
+
+## Usage
+
+Cards are used to group related content and actions. They can contain various elements such as text, images, and buttons.
+
+```jsx
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardSubtitle>Card Subtitle</CardSubtitle>
+  </CardHeader>
+  <CardBody>
+    <p>Card content goes here.</p>
+  </CardBody>
+  <CardFooter>
+    <Button variant="primary">Action</Button>
+  </CardFooter>
+</Card>
+```
+
+## Anatomy
+
+A Card consists of several sub-components:
+
+- `Card`: The main container component
+- `CardHeader`: Contains the title and subtitle
+- `CardTitle`: The main heading of the card
+- `CardSubtitle`: An optional subtitle for the card
+- `CardBody`: The main content area of the card
+- `CardFooter`: Contains actions related to the card
+
+## Variants
+
+### Basic Card
+
+A simple card with minimal styling.
+
+### Elevated Card
+
+A card with a shadow to create a raised effect.
+
+### Outlined Card
+
+A card with a border outline.
+
+## Properties
+
+{% table %}
+- Prop
+- Type
+- Default
+- Description
+---
+- variant
+- 'basic' | 'elevated' | 'outlined'
+- 'basic'
+- The visual style of the card
+---
+- padding
+- 'none' | 'small' | 'medium' | 'large'
+- 'medium'
+- The padding inside the card
+---
+- className
+- string
+- ''
+- Additional CSS classes
+{% /table %}
+
+## Accessibility
+
+Cards should have a logical tab order and focus states for interactive elements. Non-interactive cards should be treated as containers and not receive focus.

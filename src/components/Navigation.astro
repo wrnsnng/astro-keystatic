@@ -1,8 +1,92 @@
 ---
+import { getComponents, type ComponentEntry } from '../lib/components';
+
+const components = await getComponents();
 ---
 
 <div class="nav-links">
     <a href="/">Home</a>
     <a href="/about/">About</a>
     <a href="/blog/">Blog</a>
+    <a href="/components/">Components</a>
+    
+    <!-- Component Navigation Dropdown -->
+    <div class="dropdown">
+        <button class="dropdown-btn">Components ▼</button>
+        <div class="dropdown-content">
+            {components.map((component: ComponentEntry) => (
+                <a href={`/components/${component.slug}`}>{component.data.title}</a>
+            ))}
+        </div>
+    </div>
 </div>
+
+<style>
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 0;
+    }
+    
+    .nav-links a {
+        padding: 0.5rem 1rem;
+        text-decoration: none;
+        color: #1e293b;
+    }
+    
+    .nav-links a:hover,
+    .nav-links a:focus {
+        background-color: #f1f5f9;
+        border-radius: 0.25rem;
+    }
+    
+    /* Dropdown Styles */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        text-align: left;
+        width: 100%;
+        font-size: 1rem;
+        color: #1e293b;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        z-index: 1;
+        border-radius: 0.25rem;
+        padding: 0.5rem 0;
+    }
+    
+    .dropdown-content a {
+        display: block;
+        padding: 0.5rem 1rem;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    /* Media Query for larger screens */
+    @media screen and (min-width: 636px) {
+        .nav-links {
+            flex-direction: row;
+            gap: 1rem;
+        }
+        
+        .dropdown-content {
+            left: 0;
+            top: 100%;
+        }
+    }
+</style>

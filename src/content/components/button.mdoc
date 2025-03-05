@@ -1,0 +1,55 @@
+---
+name: button
+title: Button
+shortDescription: A versatile button component for user interactions
+status: stable
+---
+
+# Button Component
+
+The Button component is a fundamental UI element used for triggering actions within the application.
+
+## Usage
+
+Buttons can be used in forms, dialogs, or anywhere you need to enable user interaction.
+
+```jsx
+<Button variant="primary">Click me</Button>
+```
+
+## Variants
+
+The button component supports several variants:
+
+### Primary Button
+
+The primary button is used for the main actions on a page.
+
+### Secondary Button
+
+Secondary buttons are used for secondary actions.
+
+### Tertiary Button
+
+Tertiary buttons are used for less important actions.
+
+## Sizes
+
+The button component supports different sizes:
+
+- Small
+- Medium (default)
+- Large
+
+## Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | 'primary' \| 'secondary' \| 'tertiary' | 'primary' | The visual style of the button |
+| size | 'small' \| 'medium' \| 'large' | 'medium' | The size of the button |
+| disabled | boolean | false | Whether the button is disabled |
+| onClick | function | undefined | Function called when the button is clicked |
+
+## Accessibility
+
+Buttons are keyboard accessible and support focus states for accessibility. 

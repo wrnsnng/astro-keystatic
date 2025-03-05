@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getComponents, type ComponentEntry } from '../../lib/components';
+
+const pageTitle = "Component Library";
+const components = await getComponents();
+
+// Group components by status
+const groupedComponents = components.reduce((acc: Record<string, ComponentEntry[]>, component: ComponentEntry) => {
+  const status = component.data.status;
+  if (!acc[status]) {
+    acc[status] = [];
+  }
+  acc[status].push(component);
+  return acc;
+}, {} as Record<string, ComponentEntry[]>);
+
+// Define status order and labels
+const statusOrder = ['stable', 'beta', 'alpha', 'deprecated'] as const;
+type StatusType = typeof statusOrder[number];
+
+const statusLabels: Record<StatusType, string> = {
+  stable: 'Stable Components',
+  beta: 'Beta Components',
+  alpha: 'Alpha Components',
+  deprecated: 'Deprecated Components'
+};
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="component-library">
+    <div class="intro-section mb-8">
+      <p class="text-lg mb-4">
+        Welcome to our design system component library. Browse through our components 
+        to learn how to use them in your applications.
+      </p>
+    </div>
+    
+    {statusOrder.map(status => {
+      if (!groupedComponents[status] || groupedComponents[status].length === 0) return null;
+      
+      return (
+        <section class="component-section mb-10">
+          <h2 class="text-2xl font-bold mb-4">{statusLabels[status]}</h2>
+          <div class="component-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {groupedComponents[status]?.map((component: ComponentEntry) => (
+              <a 
+                href={`/components/${component.slug}`} 
+                class="component-card p-4 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 class="text-xl font-semibold mb-2">{component.data.title}</h3>
+                <p class="text-gray-600">{component.data.shortDescription}</p>
+                <div class="mt-2">
+                  <span class={`inline-block px-2 py-1 text-xs rounded-full ${
+                    status === 'stable' ? 'bg-green-100 text-green-800' :
+                    status === 'beta' ? 'bg-blue-100 text-blue-800' :
+                    status === 'alpha' ? 'bg-purple-100 text-purple-800' :
+                    'bg-red-100 text-red-800'
+                  }`}>
+                    {status}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</BaseLayout>
+
+<style>
+  .component-library {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+</style> 

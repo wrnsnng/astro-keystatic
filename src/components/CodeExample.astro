@@ -1,0 +1,48 @@
+---
+export interface Props {
+  code: string;
+  language?: string;
+  title?: string;
+  preview?: boolean;
+}
+
+const { code, language = 'jsx', title, preview = true } = Astro.props;
+---
+
+<div class="code-example mb-8">
+  {title && (
+    <div class="code-title bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 rounded-t-md border border-b-0">
+      {title}
+    </div>
+  )}
+  
+  {preview && (
+    <div class="code-preview p-6 bg-gray-50 border rounded-t-md">
+      <slot />
+    </div>
+  )}
+  
+  <div class={`code-block ${preview ? 'rounded-b-md' : 'rounded-md'}`}>
+    <pre class={`language-${language}`}><code class={`language-${language}`}>{code}</code></pre>
+  </div>
+</div>
+
+<style>
+  .code-block {
+    position: relative;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+  }
+  
+  .code-block pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    background-color: #f8fafc;
+  }
+  
+  .code-block code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.875rem;
+  }
+</style> 

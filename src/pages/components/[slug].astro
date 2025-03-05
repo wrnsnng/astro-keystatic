@@ -1,0 +1,39 @@
+---
+import { getComponents, getComponentBySlug, type ComponentEntry } from '../../lib/components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+
+export async function getStaticPaths() {
+  const components = await getComponents();
+  
+  return components.map((component: ComponentEntry) => ({
+    params: { slug: component.slug },
+    props: { component },
+  }));
+}
+
+interface Props {
+  component: ComponentEntry;
+}
+
+const { component } = Astro.props;
+const { Content } = await component.render();
+---
+
+<ComponentLayout 
+  title={component.data.title}
+  name={component.data.name}
+  shortDescription={component.data.shortDescription}
+  status={component.data.status}
+>
+  <Content />
+  
+  <div slot="examples">
+    <!-- Examples will be added here -->
+    <p>Component examples will be shown here.</p>
+  </div>
+  
+  <div slot="api">
+    <!-- API docs will be added here -->
+    <p>Component API documentation will be shown here.</p>
+  </div>
+</ComponentLayout> 
